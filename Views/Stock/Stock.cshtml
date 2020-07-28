@@ -1,0 +1,113 @@
+@model Inventory.ViewModels.StockViewModel
+@using ExtensionMethods
+@using System.Text.Json;
+@using System.Text.Json.Serialization;
+
+@section AddToHead{
+    <link rel="stylesheet" href="/css/stock/style.css">
+    <script src="/js/stock/script.js" type="text/javascript"></script>
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+}
+<main>
+      <div>
+      <div class="stock-header">
+        <h2>Stock</h2>
+        <button class="new-stock">
+          <img src="/img/plus-white.svg" alt="">
+        </button>
+      </div>
+      <table class="all-stock">
+        <tr>
+          <th>ID</th>
+          <th class="item-name">Item</th>
+          <th>Qty</th>
+        </tr>
+        @foreach (var stock in Model.stocks)
+        {
+            <tr id="@stock.id" class="stock">
+                <td>@stock.id</td>
+                <td class="item-name">@stock.itemName</td>
+                <td>@stock.count</td>
+            </tr>
+        }
+      </table>
+    </div>
+    <div class="item-modal detail-item-modal">
+      <div class="modal-content">
+        <img class="close-modal" src="/img/plus.svg">
+        <h2>Item #<span class="modal-item-id"></span></h2>
+        <p>Item Name:</p><p class="modal-item-name"></p>
+        <p>Item Qty: </p><p class="modal-item-qty"></p>
+        <p>Pending Orders:</p>
+        <ul class="pending-orders">
+        </ul>
+        <div class="item-controls">
+          <a class="edit">Edit Item</a>
+          <a class="sell-item">Sell Item</a>
+          <a class="order-more">Order More</a>
+        </div>
+      </div>
+    </div>
+    <div class="item-modal edit-item-modal">
+      <div class="modal-content">
+        <img class="close-modal" src="/img/plus.svg">
+        <h2>Item <span class="modal-item-id"></span></h2>
+        <div class="edit-item-form">
+          <label for="item-name">Item Name:</label>
+          <input name="itemName" class="modal-item-name-edit" type="text" placeholder="old item name">
+          <button class="modal-btn save-item-btn">Save</button>
+        </div>
+        <div class="item-controls">
+          <a class="cancel">Cancel</a>
+          <a class="delete">Delete Item</a>
+        </div>
+      </div>
+    </div>
+    <div class="item-modal new-item-modal @(Model.isNew ? "active" : "")">
+      <div class="modal-content">
+        <img class="close-modal" src="/img/plus.svg">
+        <h2>New Item</h2>
+        <form asp-controller="Stock" asp-action="Create" method="post">
+          <label for="item-name">Item Name:</label>
+          <input class="item-name-edit" type="text" name="itemName">
+          <button class="modal-btn">Create</button>
+        </form>
+        <a class="cancel">Cancel</a>
+      </div>
+    </div>
+    <div class="item-modal sell-item-modal">
+      <div class="modal-content">
+        <img class="close-modal" src="/img/plus.svg">
+        <h2>Sell Item</h2>
+        <div class="sell-item-form">
+          <label for="item-name">Item:</label>
+          <select id="item-name" name="itemName">
+          @foreach (var stock in Model.stocks)
+          {
+            <option value="@stock.itemName">@stock.itemName</option>
+          }
+          </select>
+          <label for="item-amount">Amount to sell:</label>
+          <input id="item-amount" name="sellAmount" type="number" min="0" required>
+          <button class="sell-item-btn modal-btn">Sell</button>
+        </div>
+        <a class="cancel cancel-sale">Cancel</a>
+      </div>
+    </div>
+    </main>
+    @{
+      List<object> orderData = new List<object>();
+      foreach (var order in Model.orders)
+      {
+        orderData.Add(order);
+      }
+      <script>
+        const ORDERS = @Html.Raw(JsonSerializer.Serialize(orderData))
+        var QUICK_SALE = @(@Model.sellItem ? 1 : 0);
+      </script>
+    }
+    

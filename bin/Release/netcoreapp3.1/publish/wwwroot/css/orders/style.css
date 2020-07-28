@@ -1,0 +1,449 @@
+html {
+  height: 100%;
+  overflow: hidden;
+  font-size: 50%; }
+
+*::-moz-focus-inner {
+  border: 0; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0; }
+
+body {
+  height: 100%;
+  position: absolute;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+a {
+  text-decoration: none; }
+
+.container {
+  top: 0;
+  border: 1px solid black;
+  box-shadow: 0 0 0.5rem black;
+  background-color: #E7ECEF;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, min-content); }
+  @media only screen and (min-width: 1000px) {
+    .container {
+      display: grid;
+      grid-template-columns: 1fr 3fr;
+      grid-template-rows: min-content auto;
+      align-content: stretch; } }
+
+.log-out-cover {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.2);
+  display: block;
+  z-index: 1; }
+  .log-out-cover:not(.active) {
+    display: none; }
+
+header {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  color: #E7ECEF;
+  background-color: #990D0D;
+  grid-row: 1 / 2;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #E7ECEF;
+  z-index: 10; }
+  header .menu-btn {
+    left: 8px;
+    top: 0;
+    width: 6rem;
+    height: 100%;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+    @media only screen and (min-width: 1000px) {
+      header .menu-btn {
+        display: none; } }
+    header .menu-btn div {
+      width: 80%;
+      height: .5rem;
+      background-color: #E7ECEF; }
+      header .menu-btn div::before {
+        display: block;
+        content: "";
+        background-color: #E7ECEF;
+        width: 100%;
+        height: .5rem;
+        transform: translateY(-250%); }
+      header .menu-btn div::after {
+        display: block;
+        content: "";
+        background-color: #E7ECEF;
+        width: 100%;
+        height: .5rem;
+        transform: translateY(150%); }
+  header h1 {
+    font-size: 4rem;
+    margin: 0 auto;
+    margin-left: -4rem;
+    text-align: center;
+    flex: 1;
+    font-family: "Courgette", sans-serif; }
+    header h1 a {
+      text-decoration: none;
+      color: white; }
+  header .user {
+    height: 4rem;
+    width: 4rem;
+    background: #E7ECEF;
+    border-radius: 50%;
+    right: 2rem;
+    position: absolute;
+    cursor: pointer; }
+    header .user .user-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #990D0D;
+      height: 100%;
+      width: 100%;
+      font-family: "Roboto", sans-serif;
+      font-size: 2rem; }
+  header .log-out {
+    position: absolute;
+    top: 6rem;
+    right: 0;
+    width: 20rem;
+    background: white;
+    color: black;
+    font-size: 3rem;
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+    font-weight: 300;
+    box-shadow: 0 0 0.3rem black;
+    z-index: 10;
+    opacity: 1;
+    transition: all .2s;
+    transform: translateX(0); }
+    header .log-out:not(.active) {
+      transform: translateX(100%);
+      opacity: 0; }
+    header .log-out p {
+      margin-bottom: 3rem; }
+    header .log-out a {
+      text-decoration: none;
+      background-color: #990D0D;
+      color: white;
+      padding: 1rem;
+      border-radius: 2rem; }
+
+.cover {
+  display: none; }
+
+nav.active ~ .cover {
+  display: block;
+  position: absolute;
+  top: 6rem;
+  width: 100vw;
+  height: 100%;
+  z-index: 5;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.2); }
+
+nav {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 10;
+  top: 6rem;
+  width: 60%;
+  transform: translateX(0);
+  transition: all .3s;
+  box-shadow: 0 0 0.5rem black;
+  border: 1px solid black;
+  opacity: 1; }
+  nav:not(.active) {
+    transform: translateX(-100%);
+    opacity: 0; }
+  @media only screen and (min-width: 1000px) {
+    nav {
+      grid-column: 1 / 2;
+      grid-row: 2 / -1;
+      transform: translateX(0) !important;
+      opacity: 1 !important;
+      top: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%; } }
+  nav .nav-btn {
+    padding: 2rem;
+    font-size: 3.3rem;
+    border-radius: 0;
+    background-color: #E7ECEF;
+    color: #001011;
+    border: none;
+    font-family: "Roboto", sans-serif;
+    border-bottom: 1px solid #272932;
+    user-select: none;
+    outline: none;
+    text-align: center; }
+    nav .nav-btn::-moz-focus-inner {
+      border: 0; }
+    nav .nav-btn.selected {
+      background-color: #0E1428;
+      color: #E7ECEF;
+      font-style: italic; }
+
+main {
+  overflow-y: auto;
+  position: relative;
+  flex: 1; }
+  @media only screen and (min-width: 1000px) {
+    main {
+      grid-column: 2 / -1; } }
+  main .order-header {
+    grid-column: 1 / -1;
+    display: flex;
+    padding: 1.5rem 0;
+    height: 100%;
+    position: relative; }
+    main .order-header h2 {
+      font-family: "Roboto Slab";
+      font-size: 5rem;
+      font-weight: 500;
+      margin: .5rem auto;
+      width: 100%;
+      text-align: center; }
+    main .order-header button.new-order-btn {
+      position: absolute;
+      right: 3rem;
+      align-self: center;
+      height: 6rem;
+      width: 6rem;
+      border: none;
+      box-shadow: 0 0 0.4rem black;
+      border-radius: 50%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      background-color: #990D0D;
+      cursor: pointer; }
+      main .order-header button.new-order-btn img {
+        height: 4rem; }
+  main table.all-orders {
+    grid-column: 1 / -1;
+    border-collapse: collapse;
+    width: 100%;
+    font-family: "Roboto", sans-serif; }
+    main table.all-orders tr:first-child {
+      outline: 1px solid black;
+      height: 5rem; }
+      main table.all-orders tr:first-child th {
+        border-right: 1px solid gray; }
+    main table.all-orders th {
+      background-color: white;
+      padding: .5rem 1rem;
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 300; }
+    main table.all-orders th.item-name {
+      width: 50%; }
+    main table.all-orders tr {
+      padding: 3rem 0;
+      font-size: 2rem;
+      height: 8rem;
+      font-weight: 300;
+      text-align: center;
+      background-color: #f7f7f7;
+      transition: all 0.1s; }
+      main table.all-orders tr:not(:first-child):hover {
+        cursor: pointer;
+        background-color: rgba(0, 0, 0, 0.2); }
+      main table.all-orders tr:nth-child(2n+1) {
+        background-color: rgba(0, 0, 0, 0.05); }
+      main table.all-orders tr.hidden {
+        display: none; }
+      main table.all-orders tr td {
+        padding: 1rem .5rem; }
+  main .modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2); }
+    main .modal:not(.active) {
+      display: none; }
+    main .modal .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      transform: rotate(45deg);
+      width: 4rem;
+      cursor: pointer; }
+    main .modal .modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 350px;
+      max-height: 550px;
+      background-color: white;
+      margin: 10% auto;
+      padding: 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      box-shadow: 0 0 0.5rem black;
+      border-radius: 2rem; }
+      main .modal .modal-content h2 {
+        margin: -1rem auto 2rem auto;
+        font-family: "Roboto Slab";
+        font-size: 4rem;
+        grid-column: 1 / -1; }
+      main .modal .modal-content p, main .modal .modal-content label {
+        margin: 2rem 0;
+        font-family: "Roboto";
+        font-weight: 300;
+        font-size: 2rem;
+        grid-column: 2 / -1; }
+        main .modal .modal-content p:nth-child(2n+1), main .modal .modal-content label:nth-child(2n+1) {
+          font-weight: 500;
+          grid-column: 1 / 2; }
+      main .modal .modal-content select {
+        height: 4rem;
+        align-self: center;
+        grid-column: 2 / -1;
+        width: 100%;
+        background-color: #fff;
+        text-align: center;
+        font-family: "Roboto";
+        font-size: 1.8rem;
+        padding: .5rem;
+        border-radius: 1rem; }
+        main .modal .modal-content select:active {
+          outline: none; }
+      main .modal .modal-content .delete, main .modal .modal-content .cancel {
+        margin-top: 5rem;
+        margin-bottom: -3rem;
+        justify-self: center;
+        grid-column: 1 / -1 !important;
+        bottom: 1.5rem;
+        left: 1.5rem;
+        font-size: 1.8rem;
+        color: red;
+        font-weight: 400;
+        font-family: "Roboto Slab";
+        cursor: pointer; }
+      main .modal .modal-content form {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%;
+        justify-items: center;
+        font-family: "Roboto"; }
+        main .modal .modal-content form input:first-of-type {
+          height: 5rem;
+          align-self: center; }
+        main .modal .modal-content form select {
+          background-color: #fff;
+          text-align: center;
+          font-family: "Roboto";
+          font-size: 1.8rem;
+          padding: .5rem; }
+        main .modal .modal-content form input, main .modal .modal-content form select {
+          border-radius: 1rem;
+          text-align: center;
+          width: 100%;
+          justify-self: left;
+          border: 1px solid gray; }
+          main .modal .modal-content form input:focus, main .modal .modal-content form select:focus {
+            outline: none; }
+          main .modal .modal-content form input[type="submit"], main .modal .modal-content form select[type="submit"] {
+            grid-column: 1 / -1;
+            width: 50%;
+            justify-self: center;
+            margin-top: 5rem;
+            padding: 2rem 1rem;
+            background-color: #990D0D;
+            color: white;
+            font-family: "Roboto", sans-serif;
+            font-size: 2rem;
+            font-weight: 500;
+            border: none;
+            border-radius: 2rem;
+            box-shadow: 0 0 0.3rem black;
+            cursor: pointer; }
+            main .modal .modal-content form input[type="submit"]:active, main .modal .modal-content form select[type="submit"]:active {
+              transform: scale(0.95); }
+            main .modal .modal-content form input[type="submit"]:hover, main .modal .modal-content form select[type="submit"]:hover {
+              cursor: pointer;
+              transform: scale(1.05); }
+          main .modal .modal-content form input[type="number"], main .modal .modal-content form select[type="number"] {
+            border-radius: 1rem;
+            width: 60%; }
+      main .modal .modal-content a {
+        text-decoration: none;
+        outline: none;
+        font-family: "Roboto Slab", sans-serif;
+        font-weight: 400; }
+
+footer {
+  bottom: 0;
+  border: 1px solid black;
+  height: 5rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: white;
+  font-size: 2.5rem;
+  background-color: #990D0D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  grid-column: 1 / -1;
+  grid-row: -1;
+  width: 100%;
+  z-index: 50; }
+  @media only screen and (min-width: 1000px) {
+    footer {
+      position: absolute;
+      bottom: 0;
+      width: 100%; } }
+  footer:not(.active) {
+    display: none; }
+  footer label {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%; }
+  footer .custom-checkbox {
+    width: 3rem;
+    height: 3rem;
+    background-color: white;
+    cursor: pointer;
+    margin-left: 2rem; }
+    footer .custom-checkbox img {
+      display: none; }
+  footer input {
+    display: none; }
+    footer input:checked + label > .custom-checkbox img {
+      display: inline-block; }

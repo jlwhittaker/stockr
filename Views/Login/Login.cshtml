@@ -1,0 +1,40 @@
+@{
+    Layout = "";
+}
+
+<!DOCTYPE html>
+<html>
+<head>
+<title>Stockr</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Roboto+Slab:wght@500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/css/login/style.css">
+</head>
+
+<body>
+    <div class="container">
+        <header>
+            <h1 class="logo">Stockr</h1>
+        </header>
+        <form asp-controller="Login" asp-action="Login" method="post">
+            <h2>Log in</h2>
+            <div class="log-in-choice">
+                <div class="choice-selection">
+                    <input type="radio" name="loginChoice" id="login" value="login" checked>
+                    <label for="login">Log in <div class="custom-radio"></div></label>    
+                </div>
+                <div class="choice-selection">
+                    <input type="radio" name="loginChoice" id="newUser" value="newUser">
+                    <label for="newUser">New User <div class="custom-radio"></div></label>
+                </div>
+            </div>
+            <label for="userName">Username:</label>
+            <input type="text" id="userName" name="userName">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <p class="error">@ViewData["error"]</p>
+            <input type="submit" value="Submit">
+        </form>
+    </div>
+</body>

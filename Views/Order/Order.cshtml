@@ -1,0 +1,94 @@
+@model Inventory.ViewModels.OrderViewModel
+@using ExtensionMethods
+@using Inventory.Models
+
+
+@section AddToHead{
+    <link rel="stylesheet" href="/css/orders/style.css">
+    <script src="/js/orders/script.js" type="text/javascript"></script>
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+}
+
+<main>
+  <div>
+    <div class="order-header">
+      <h2>Orders</h2>
+      <button class="new-order-btn">
+        <img src="/img/plus-white.svg" alt="">
+      </button>
+    </div>
+   
+    <table class="all-orders">
+      <tr>
+        <th>ID</th>
+        <th class="item-name">Item</th>
+        <th>Qty</th>
+        <th>Date</th>
+        <th>Status</th>
+      </tr>
+@foreach (var order in Model.orders) {
+        <tr class="order @(@order.status.GetDisplayName() == "Completed" ? "hidden" : "")" id="@order.id">
+            <td>@order.id</td>
+            <td>@order.stock.itemName</td>
+            <td class="qty">@order.itemAmount</td>
+            <td>@order.submitDate.ToShortDateString()</td>
+            <td>@order.status.GetDisplayName()</td>
+        </tr>
+}
+    </table>
+  </div>
+  <div class="order-modal modal">
+    <div class="modal-content">
+      <img class="close-modal" src="/img/plus.svg">
+      <h2>Order #<span class="modal-order-id"></span></h2>
+      <p>Item Name:</p><p class="modal-item-name">Little knick-knack</p>
+      <p>Order Qty: </p><p class="modal-item-qty">300</p>
+      <p>Order Date: </p><p class="modal-date">6/22/20</p>
+      <p>Order Status: </p>
+      <select class="modal-order-status" name="status" asp-items="Html.GetEnumSelectList<Order.Status>()">
+        </select>
+      <p class="delete"">Delete Order</p>
+    </div>
+  </div>
+
+  <div class="new-order modal @(Model.isNew ? "active" : "")">
+    <div class="modal-content">
+      <img class="close-modal" src="/img/plus.svg">
+      <h2>New Order</h2>
+      <form asp-controller="Order" asp-action="Create" method="post">
+        <label for="item">Item: </label>
+        <select name="itemName" type="text" id="item" required>
+        @foreach (var itemName in Model.itemNames)
+        {
+          <option value="@itemName">@itemName</option>
+
+        }
+        </select>
+        <label for="qty">Qty: </label>
+        <input type="number" name="itemAmount" required>
+        <input type="submit" value="Place Order">
+      </form>
+      <a href="#"class="cancel">Cancel</a>
+    </div>
+  </div>
+</main>
+<footer class="active">
+    <input type="checkbox" id="showCompleted">
+    <label for="showCompleted">
+      Show Completed Orders
+      <div class="custom-checkbox">
+        <img src="/img/check.svg" alt="">
+      </div>
+    </label>
+    
+  </footer>
+
+<script>
+const ITEM_NAME = "@Html.Raw(ViewData["ItemName"])";
+
+const ORDER_ID = "@ViewData["OrderId"]";
+</script>

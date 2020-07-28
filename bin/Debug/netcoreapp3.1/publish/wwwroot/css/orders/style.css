@@ -1,0 +1,300 @@
+html {
+  font-size: 50%; }
+
+*::-moz-focus-inner {
+  border: 0; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0; }
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.container {
+  top: 0;
+  border: 1px solid black;
+  box-shadow: 0 0 0.5rem black;
+  background-color: #E7ECEF;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: absolute;
+  width: 100%;
+  min-height: 100vh;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(2, min-content); }
+  @media only screen and (min-width: 1000px) {
+    .container {
+      grid-template-columns: 1fr 3fr;
+      grid-template-rows: min-content auto;
+      align-content: stretch; } }
+
+header {
+  grid-column: 1 / -1;
+  width: 100%;
+  height: 6rem;
+  display: flex;
+  color: #E7ECEF;
+  background-color: #990D0D;
+  grid-row: 1 / 2;
+  justify-content: center;
+  align-items: center;
+  padding: 1rem 0;
+  border-bottom: 1px solid #E7ECEF;
+  z-index: 10; }
+  header .menu-btn {
+    left: 8px;
+    top: 0;
+    width: 6rem;
+    height: 100%;
+    z-index: 100;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; }
+    @media only screen and (min-width: 1000px) {
+      header .menu-btn {
+        display: none; } }
+    header .menu-btn div {
+      width: 80%;
+      height: .5rem;
+      background-color: #E7ECEF; }
+      header .menu-btn div::before {
+        display: block;
+        content: "";
+        background-color: #E7ECEF;
+        width: 100%;
+        height: .5rem;
+        transform: translateY(-250%); }
+      header .menu-btn div::after {
+        display: block;
+        content: "";
+        background-color: #E7ECEF;
+        width: 100%;
+        height: .5rem;
+        transform: translateY(150%); }
+  header h1 {
+    font-size: 4rem;
+    margin: 0 auto;
+    text-align: center;
+    flex: 1;
+    font-family: "Courgette", sans-serif; }
+  header .user {
+    height: 4rem;
+    width: 4rem;
+    background: #E7ECEF;
+    border-radius: 50%;
+    right: 2rem;
+    position: absolute; }
+    header .user .user-name {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #990D0D;
+      height: 100%;
+      width: 100%;
+      font-family: "Roboto", sans-serif;
+      font-size: 2rem; }
+
+.cover {
+  display: none; }
+
+nav.active ~ .cover {
+  display: block;
+  position: absolute;
+  top: 6rem;
+  width: 100vw;
+  height: 100vh;
+  z-index: 5;
+  top: 0;
+  background-color: rgba(0, 0, 0, 0.2); }
+
+nav {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  z-index: 10;
+  top: 6rem;
+  width: 60%;
+  transform: translateX(0);
+  transition: all .3s;
+  box-shadow: 0 0 0.5rem black;
+  border: 1px solid black;
+  opacity: 1; }
+  nav:not(.active) {
+    transform: translateX(-100%);
+    opacity: 0; }
+  @media only screen and (min-width: 1000px) {
+    nav {
+      grid-column: 1 / 2;
+      grid-row: 2 / -1;
+      transform: translateX(0) !important;
+      opacity: 1 !important;
+      top: 0;
+      position: absolute;
+      width: 100%;
+      height: 100%; } }
+  nav .nav-btn {
+    padding: 2rem;
+    font-size: 3.3rem;
+    border-radius: 0;
+    background-color: #E7ECEF;
+    color: #001011;
+    border: none;
+    font-family: "Roboto", sans-serif;
+    border-bottom: 1px solid #272932;
+    user-select: none;
+    outline: none;
+    text-align: center; }
+    nav .nav-btn::-moz-focus-inner {
+      border: 0; }
+    nav .nav-btn.selected {
+      background-color: #0E1428;
+      color: #E7ECEF;
+      font-style: italic; }
+
+main {
+  position: relative; }
+  @media only screen and (min-width: 1000px) {
+    main {
+      grid-column: 2 / -1; } }
+  main .order-header {
+    grid-column: 1 / -1;
+    display: flex;
+    padding: 1.5rem 0; }
+    main .order-header h2 {
+      font-family: "Roboto Slab";
+      font-size: 5rem;
+      font-weight: 500;
+      margin: .5rem auto;
+      width: 100%;
+      text-align: center; }
+    main .order-header button.new-order-btn {
+      position: relative;
+      right: 5rem;
+      align-self: center;
+      height: 100%; }
+  main table.all-orders {
+    grid-column: 1 / -1;
+    border-collapse: collapse;
+    width: 100%;
+    font-family: "Roboto", sans-serif; }
+    main table.all-orders tr:first-child {
+      outline: 1px solid black; }
+      main table.all-orders tr:first-child th {
+        border-right: 1px solid gray; }
+    main table.all-orders th {
+      background-color: white;
+      margin: 0;
+      font-size: 2.5rem;
+      font-weight: 300; }
+    main table.all-orders th.item-name {
+      width: 50%; }
+    main table.all-orders tr {
+      font-size: 2rem;
+      font-weight: 300;
+      text-align: center;
+      background-color: #f7f7f7; }
+      main table.all-orders tr:nth-child(2n+1) {
+        background-color: rgba(0, 0, 0, 0.05); }
+      main table.all-orders tr.hidden {
+        display: none; }
+      main table.all-orders tr td {
+        padding: 1rem .5rem; }
+  main .modal {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.2); }
+    main .modal:not(.active) {
+      display: none; }
+    main .modal .close-modal {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      transform: rotate(45deg);
+      width: 4rem;
+      cursor: pointer; }
+    main .modal .modal-content {
+      position: relative;
+      width: 90%;
+      max-width: 350px;
+      max-height: 550px;
+      background-color: white;
+      margin: 10% auto;
+      padding: 5rem;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      box-shadow: 0 0 0.5rem black; }
+      main .modal .modal-content h2 {
+        margin: -1rem auto 2rem auto;
+        font-family: "Roboto Slab";
+        font-size: 4rem;
+        grid-column: 1 / -1; }
+      main .modal .modal-content p, main .modal .modal-content label {
+        margin: 2rem 0;
+        font-family: "Roboto";
+        font-weight: 300;
+        font-size: 2rem;
+        grid-column: 2 / -1; }
+        main .modal .modal-content p:nth-child(2n+1), main .modal .modal-content label:nth-child(2n+1) {
+          font-weight: 500;
+          grid-column: 1 / 2; }
+      main .modal .modal-content select {
+        height: 4rem;
+        align-self: center;
+        grid-column: 2 / -1;
+        width: 100%; }
+      main .modal .modal-content .delete, main .modal .modal-content .cancel {
+        margin-top: 5rem;
+        margin-bottom: -3rem;
+        margin-left: -2rem;
+        bottom: 1.5rem;
+        left: 1.5rem;
+        font-size: 1.7rem;
+        color: red;
+        font-family: "Roboto"; }
+      main .modal .modal-content form {
+        grid-column: 1 / -1;
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        width: 100%; }
+        main .modal .modal-content form input:first-of-type {
+          height: 5rem;
+          align-self: center; }
+        main .modal .modal-content form input, main .modal .modal-content form select {
+          width: 100% !important; }
+          main .modal .modal-content form input[type="submit"], main .modal .modal-content form select[type="submit"] {
+            grid-column: 1 / -1;
+            width: 80%;
+            justify-self: center;
+            margin-top: 5rem; }
+      main .modal .modal-content a {
+        text-decoration: none;
+        outline: none; }
+
+footer {
+  position: fixed;
+  bottom: 0;
+  border: 1px solid black;
+  height: 5rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  color: white;
+  font-size: 2.5rem;
+  background-color: #990D0D;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  z-index: 50; }
+  footer label {
+    margin-right: 5rem; }
+  footer input:checked, footer input:focus {
+    outline: none; }

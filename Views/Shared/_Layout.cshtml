@@ -1,0 +1,71 @@
+﻿@{
+  object userName;
+  Context.Items.TryGetValue("userName", out userName);
+}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Stockr</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=1">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link href="https://fonts.googleapis.com/css2?family=Courgette&family=Roboto+Slab:wght@500&family=Roboto:wght@300;400;500&display=swap" rel="stylesheet"> 
+  <link rel="stylesheet" href="/css/layout/style.css">
+
+  @if (IsSectionDefined("AddToHead"))
+        {
+            @RenderSection("AddToHead", required: false)
+        }
+
+</head>
+<body>
+  <div class="container">
+  <div class="no-stock-modal @(@Context.Items.ContainsKey("noStock") ? "active" : "inactive")">
+    <div class="no-stock-modal-content">
+      <p>You don't have any items in stock!</p>
+      <p>You must create a new stock first.</p>
+      <a href="/Stock/Create">Create New Stock</a>
+    </div>
+  </div>
+    <div class="log-out-cover"></div>
+    <header>
+      <div class="menu-btn" style="cursor: pointer">
+        <div></div>
+      </div>
+      <h1 class="logo"><a href="/">Stockr</a></h1>
+      <div class="user">
+        <p class="user-name">@(userName != null ? @userName.ToString()[0].ToString() : "")</p>
+      </div>
+      <div class="log-out">
+        <p>@userName</p>
+        <a href="/Logout">Log Out</a>
+      </div>
+    </header>
+    <nav>
+      <a asp-controller="Home" asp-action="Index" class="nav-btn nav-dash selected">Dashboard</a>
+      <a asp-controller="Stock" asp-action="Index" class="nav-btn nav-stock">Stock</a>
+      <a asp-controller="StockAlert" asp-action="Index" class="nav-alerts nav-btn">Alerts</a>
+      <a asp-controller="Order" asp-action="Index" class="nav-orders nav-btn">Orders</a>
+
+    </nav>
+    <div class="cover"></div>
+        @RenderBody()
+  </div>
+  <script>
+    window.onload = () => {
+      document.querySelectorAll(".menu-btn, .cover").forEach((elem) => {
+        elem.addEventListener("click", (e) => {
+        document.querySelector("nav").classList.toggle("active");
+        });
+      });
+      document.querySelectorAll(".user, .log-out-cover").forEach((elem) => {
+        elem.addEventListener("click" , (e) => {
+          document.querySelector(".log-out").classList.toggle("active");
+          document.querySelector(".log-out-cover").classList.toggle("active");
+
+        })
+      })
+    };
+  </script>
+</body>
+</html>
+

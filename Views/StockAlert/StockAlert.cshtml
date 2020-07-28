@@ -1,0 +1,103 @@
+@model Inventory.ViewModels.AlertViewModel
+@using ExtensionMethods
+@using Inventory.Models
+
+@section AddToHead{
+    <link rel="stylesheet" href="/css/alerts/style.css">
+    <script src="/js/alerts/script.js" type="text/javascript"></script>
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post, new { @class="asp-form"}))
+{
+    @Html.AntiForgeryToken()
+}
+
+<main>
+    <div>
+      <div class="alert-header">
+        <h2>Alerts</h2>
+        <button class="new-alert">
+          <img src="/img/plus-white.svg" alt="">
+        </button>
+      </div>
+      
+      <table class="all-alerts">
+        <tr>
+          <th class="item-name">Item</>
+          <th>Alert</th>
+          <th>On</th>
+        </tr>
+@foreach (var alert in Model.alerts)
+{
+        <tr id="@alert.id" class="alert">
+          <td style="display: none">@alert.id</td>
+          <td>@alert.itemName</td>
+          <td class="alert-type @alert.alertType">@alert.alertType.GetDisplayName()</td>
+          <td style="display: none">@alert.lowStockThreshold</td>
+          <td>
+            <div class="checkbox-wrapper">
+              <div class="alert-on-loading"></div>
+              <input class="alert-on" 
+                        id="alert-on-@alert.id" 
+                        type="checkbox"
+                        @(@alert.active ? "checked" : "")>
+              <label for="alert-on-@alert.id" class="custom-checkbox custom-checkbox-main active">
+                <img src="/img/check.svg" alt="">
+              </label>     
+            </div>                  
+          </td>
+        </tr>
+}
+      </table>
+    </div>
+    <div class="detail-modal modal">
+      <div class="modal-content">
+        <img class="close-modal" src="/img/plus.svg" alt="" onclick="closeModal">
+        <h2>Alert #<span class="modal-alert-id"></span></h2>
+        <p>Item Name:</p><p class="modal-alert-name">Little knick-knack</p>
+        <p>Alert Type: </p><select class="modal-alert-type" asp-items="Html.GetEnumSelectList<StockAlert.AlertType>()">
+        </select>
+        <div class="threshold-wrapper">
+          <p>Alert Threshold: </p>
+          <input class="modal-alert-threshold" type="number">
+        </div>
+        <label for="alert-active">Active: </label>
+        <div class="modal-check-wrapper">
+          <div class="alert-on-loading"></div>
+          <input class="alert-on alert-on-modal" type="checkbox" id="alert-active" name="active">
+          <label for="alert-active" class="custom-checkbox custom-checkbox-modal active">
+            <img src="/img/check.svg" alt="">
+          </label>
+        </div>
+        <a class="delete-alert">Delete Alert</a>
+        <a class="save-alert">Save</a>
+      </div>
+    </div>
+
+    <div class="modal new-alert-modal @((bool)ViewData["isNew"] ? "active" : "")">
+      <form asp-controller="StockAlert" asp-action="New" method="post" class="modal-content">
+        <img class="close-modal" src="/img/plus.svg" alt="" onclick="closeModal">
+        <h2>New Alert</h2>
+        <label for="item">Item :</label>
+        <select name="itemName" id="item" required>
+        @foreach (var itemName in Model.itemNames)
+        {
+            <option value="@itemName">@itemName</option>
+        }
+ 
+        </select>
+        <label for="alert-type">Alert Type: </label>
+        <select class="modal-alert-type" name="alertType" asp-items="Html.GetEnumSelectList<StockAlert.AlertType>()">
+        </select>
+
+        <div class="threshold-wrapper active">
+          <p>Alert Threshold: </p>
+          <input name="lowStockThreshold" class="modal-alert-threshold" type="number" value="0">
+        </div>
+        <button class="modal-btn" type="submit">Save</button>
+        <a class="delete">Cancel</a>
+      </form>
+    </div>
+    
+    </div>
+  </main>

@@ -1,0 +1,79 @@
+﻿@model IEnumerable<Inventory.Models.StockAlert>
+@using ExtensionMethods
+
+@section AddToHead{
+    <link rel="stylesheet" href="css/index/style.css">
+    <script src="js/index/script.js" type="text/javascript"></script>
+}
+
+@{
+    ViewData["Title"] = "Home Page";
+    int alertCount = @Model.Count();
+}
+
+@using (Html.BeginForm(null, null, FormMethod.Post))
+{
+    @Html.AntiForgeryToken()
+}
+
+
+<main>
+    <h2>Dashboard</h2>
+    <div class="quick-action">
+    <a asp-controller="Order" asp-action="Create" class="new-order">
+        <img src="/img/new_order.svg" alt="">
+        <p>New Order</p>
+    </a>
+    <a asp-controller="Stock" asp-action="Sell" class="sell-item">
+        <img src="/img/sell.svg" alt="">
+        <p>Sell Item</p>
+    </a>
+    <a asp-controller="Stock" asp-action="Create" class="new-stock">
+        <img src="/img/new_stock.svg" alt="">
+        <p>New Stock</p>
+    </a>
+    <a asp-controller="StockAlert" asp-action="New" class="new-alert">
+        <img src="/img/alert.svg" alt="">
+        <p>New Alert</p>
+    </a>
+    </div>
+
+    <div class="alerts">
+    <div class="alerts-header dash-header">
+        <h2>Alerts (<span id="alert-count">@alertCount</span>)</h2>
+    </div>
+    <div class="alerts-content">
+        <ul>
+        @foreach (var alert in Model) {
+                var type = alert.alertType;
+                var name = alert.alertType.GetDisplayName();
+                var msg = alert.alertType.GetDescription();
+                int n;
+                if (type == StockAlert.AlertType.lowStock)
+                {
+                    n = (int)alert.lowStockThreshold;
+                }
+                else 
+                {
+                    n = 0;
+                }
+                var style = alert.alertType.GetShortName();
+            <li id="alert-@alert.id">
+            <p class="alert-type @style">@name</p>
+            <div class="alert-content">
+            <p>@alert.stock.itemName</p>
+            
+            <p>@string.Format(msg, n)</p>
+            </div>
+                <button onclick="javascript:dismissAlert(@alert.id)">
+                    <img src="/img/check-white.svg" alt="">
+                    <span class="tooltip">Dismiss</span>
+                </button>
+             
+        </li>
+        }
+        </ul>
+    </div>
+    </div>
+
+</main>

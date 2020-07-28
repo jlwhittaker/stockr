@@ -1,0 +1,124 @@
+html {
+  font-size: 50%; }
+
+*::-moz-focus-inner {
+  border: none;
+  outline: 0; }
+
+*:focus {
+  outline: 0; }
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0; }
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+
+.container {
+  top: 0;
+  border: 1px solid black;
+  box-shadow: 0 0 0.5rem black;
+  background-color: #E7ECEF;
+  max-width: 1400px;
+  margin: 0 auto;
+  position: absolute;
+  width: 100%;
+  min-height: 100vh; }
+
+header {
+  top: 0;
+  width: 100%;
+  height: 6rem;
+  background-color: #990D0D;
+  font-family: "Courgette", sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center; }
+  header h1 {
+    font-size: 4rem;
+    margin: 0 auto;
+    margin-left: -4rem;
+    text-align: center;
+    flex: 1;
+    font-family: "Courgette", sans-serif;
+    color: white; }
+
+form {
+  width: 350px;
+  padding: 2rem;
+  background: white;
+  margin: 0 auto;
+  margin-top: 10rem;
+  display: grid;
+  align-items: center;
+  grid-template-columns: 1fr 1fr;
+  font-family: "Roboto", sans-serif;
+  row-gap: 3rem;
+  justify-content: center;
+  box-shadow: 0 0 0.5rem black; }
+  form h2 {
+    font-weight: 300;
+    font-size: 5rem;
+    grid-column: 1 / -1;
+    justify-self: center;
+    margin-bottom: 3rem; }
+  form .log-in-choice {
+    grid-column: 1 / -1;
+    justify-self: center;
+    display: flex;
+    justify-content: center;
+    margin-bottom: 2rem; }
+    form .log-in-choice .choice-selection {
+      margin: 2rem 3rem;
+      display: flex;
+      justify-content: center; }
+      form .log-in-choice .choice-selection label {
+        margin-right: 1rem; }
+  form label {
+    font-size: 2rem;
+    cursor: pointer;
+    justify-self: center;
+    align-self: center;
+    margin-right: 2rem;
+    display: flex;
+    align-items: center; }
+  form .custom-radio {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 50%;
+    border: 1px solid black;
+    align-self: center;
+    padding: .5rem;
+    background-clip: content-box;
+    margin-left: 1rem; }
+  form input[type="text"], form input[type="password"] {
+    height: 4rem;
+    padding: 0 .5rem;
+    max-width: 200px;
+    border-radius: .5rem;
+    font-size: 2rem; }
+  form input[type="radio"] {
+    display: none; }
+    form input[type="radio"]:checked ~ label > .custom-radio {
+      background-color: #990D0D; }
+  form input[type="submit"] {
+    grid-column: 1 / -1;
+    justify-self: center;
+    background-color: #990D0D;
+    margin-top: 4rem;
+    color: white;
+    padding: 2rem;
+    border-radius: 2rem;
+    font-size: 2.5rem;
+    border: none;
+    box-shadow: 0 0 0.4rem black;
+    cursor: pointer; }
+  form p.error {
+    font-size: 2rem;
+    grid-column: 1 / -1;
+    justify-self: center;
+    color: red; }
